@@ -1,19 +1,23 @@
 let user;
 
 function authenticated() {
-    document.getElementsByClassName("authenticated").forEach(function(element) {
+    const authenticated = document.getElementsByClassName("authenticated");
+    Array.from(authenticated).forEach(function(element) {
         element.style.visibility = 'visible';
     });
-    document.getElementsByClassName("unauthenticated").forEach(function(element) {
+    const unauthenticated = document.getElementsByClassName("unauthenticated");
+    Array.from(unauthenticated).forEach(function(element) {
         element.style.visibility = 'hidden';
-    });    
+    });
 }
 
 function unauthenticated() {
-    document.getElementsByClassName("authenticated").forEach(function(element) {
+    const authenticated = document.getElementsByClassName("authenticated");
+    Array.from(authenticated).forEach(function(element) {
         element.style.visibility = 'hidden';
-    });    
-    document.getElementsByClassName("unauthenticated").forEach(function(element) {
+    });
+    const unauthenticated = document.getElementsByClassName("unauthenticated");
+    Array.from(unauthenticated).forEach(function(element) {
         element.style.visibility = 'visible';
     });
 }
