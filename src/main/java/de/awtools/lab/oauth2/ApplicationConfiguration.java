@@ -17,8 +17,7 @@ public class ApplicationConfiguration {
         http
             .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
             .authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/", "/error", "/webjars/**", "/index.html",
-                    "/login/oauth2/code/github", "/logout").permitAll()
+                .requestMatchers("/", "/error", "/script/**", "/index.html").permitAll()
                 .anyRequest().authenticated())
                 /* 
                 .logout(l ->
