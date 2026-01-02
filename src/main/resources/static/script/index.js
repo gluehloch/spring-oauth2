@@ -1,19 +1,19 @@
-const user = document.getElementById("user");
+let user;
 
 function authenticated() {
-    document.getElementsByName("authenticated").forEach(function(element) {
+    document.getElementsByClassName("authenticated").forEach(function(element) {
         element.style.visibility = 'visible';
     });
-    document.getElementsByName("unauthenticated").forEach(function(element) {
+    document.getElementsByClassName("unauthenticated").forEach(function(element) {
         element.style.visibility = 'hidden';
     });    
 }
 
 function unauthenticated() {
-    document.getElementsByName("authenticated").forEach(function(element) {
+    document.getElementsByClassName("authenticated").forEach(function(element) {
         element.style.visibility = 'hidden';
     });    
-    document.getElementsByName("unauthenticated").forEach(function(element) {
+    document.getElementsByClassName("unauthenticated").forEach(function(element) {
         element.style.visibility = 'visible';
     });
 }
@@ -25,7 +25,7 @@ async function getUserData() {
             throw new Error('Network response was not ok');
         }
         const result =  await response.json();
-        user.append(JSON.stringify(result));
+        user.textContent = JSON.stringify(result);
         authenticated();
         console.log('Fetched user data:', result);
         return result;
@@ -35,8 +35,8 @@ async function getUserData() {
     }
 }
 
-/*
 document.addEventListener("DOMContentLoaded", (event) => {
+    user = document.getElementById("user");
     console.log("DOM fully loaded and parsed");
     this.getUserData().then((data) => {
         console.log('Authenticated', data);
@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
         console.log('Unauthenticated', error);
     });
 });
-*/
 
 //$.ajaxSetup({
 //  beforeSend : function(xhr, settings) {
