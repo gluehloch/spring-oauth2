@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 @EnableWebSecurity
 @Configuration
@@ -14,7 +15,10 @@ public class ApplicationConfiguration {
    
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+        requestCache.setMatchingRequestParameterName(null);
+
+        http.requestCache(cache -> cache.requestCache(requestCache))
             .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
             .authorizeHttpRequests((authz) -> authz
                 .requestMatchers("/", "/error", "/script/**", "/index.html").permitAll()
@@ -32,6 +36,7 @@ logout.deleteCookies("remove")
                     */
             .oauth2Client(Customizer.withDefaults())
             .oauth2Login(Customizer.withDefaults());
+            //.oauth2Login((login) -> login.defaultSuccessUrl("/", false));
         return http.build();
     }
 

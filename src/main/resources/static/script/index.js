@@ -49,6 +49,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
     });
 });
 
+function logout() {
+    fetch('/logout', {
+        method: 'POST',
+        headers: {
+            'X-XSRF-TOKEN': Cookies.get('XSRF-TOKEN')
+        }
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+    }).catch((error) =>{
+        console.error('There has been a problem with your fetch operation:', error);
+    });
+}
+
 //$.ajaxSetup({
 //  beforeSend : function(xhr, settings) {
 //    if (settings.type == 'POST' || settings.type == 'PUT'
