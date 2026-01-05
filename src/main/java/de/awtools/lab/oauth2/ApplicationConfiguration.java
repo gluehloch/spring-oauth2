@@ -21,7 +21,7 @@ public class ApplicationConfiguration {
         http.requestCache(cache -> cache.requestCache(requestCache))
             .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
             .authorizeHttpRequests((authz) -> authz
-                .requestMatchers("/", "/error", "/script/**", "/index.html").permitAll()
+                .requestMatchers("/", "/error", "/favicon.ico", "/script/**", "/index.html").permitAll()
                 .anyRequest().authenticated())
                 /* 
                 .logout(l ->
