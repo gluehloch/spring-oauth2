@@ -35,7 +35,7 @@ logout.deleteCookies("remove")
 .logoutSuccessUrl("/logout-success")
                     */
             .oauth2Client(Customizer.withDefaults())
-            .oauth2Login(Customizer.withDefaults());
+            .oauth2Login(login -> login.defaultSuccessUrl("/", true));
             //.oauth2Login((login) -> login.defaultSuccessUrl("/", false));
         return http.build();
     }
