@@ -9,5 +9,5 @@
 * `#oauth2Login(login -> login.defaultSuccessfulUrl("/", alwaysUse: true)`
   TODO: Ohne diese Angabe würden alle geschützten REST Abfragen, die ein Login erzwingen, im anschließendem
   Redirect in der JSON Response landen und diese dem Nutzer anzeigen.
-
+  [SPA mit Spring Boot und OAuth2](./spa-spring-boot-oauth2.svg)
   
