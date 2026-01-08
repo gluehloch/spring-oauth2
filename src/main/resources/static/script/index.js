@@ -24,7 +24,7 @@ function unauthenticated() {
 
 async function getUserData() {
     try {
-        const response = await fetch('/user');
+        const response = await fetch('/api/user');
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
