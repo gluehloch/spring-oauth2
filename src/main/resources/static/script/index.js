@@ -44,16 +44,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
     console.log("DOM fully loaded and parsed");
     this.getUserData().then((data) => {
         console.log('Authenticated', data);
+        authenticated();
     }).catch((error) => {
         console.log('Unauthenticated', error);
+        unauthenticated();
     });
 });
 
+function getCookieByName(name) {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return null;
+}
+
 function logout() {
+    const x = getCookieByName('XSRF-TOKEN');
+    console.log('XSRF-TOKEN cookie:', x);
+
     fetch('/logout', {
         method: 'POST',
         headers: {
-            'X-XSRF-TOKEN': Cookies.get('XSRF-TOKEN')
+            'X-XSRF-TOKEN': x
         }
     }).then(response => {
         if (!response.ok) {
