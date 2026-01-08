@@ -42,7 +42,8 @@ async function getUserData() {
 */
 
 function getUserData() {
-    return fetch('/api/user', { method: 'GET', headers: getTokenHeaderParam() }).then(response => {
+    const token = getTokenHeaderParam()
+    return fetch('/api/user', { method: 'GET', headers: token }).then(response => {
         console.log('/api/user - Response:', response);
         if (response.status === 401) {
             return Promise.reject('Unauthorized');
@@ -82,16 +83,18 @@ function getCookieByName(name) {
 }
 
 function getTokenHeaderParam() {
-    return { 'X-XSRF-TOKEN': getCookieByName('XSRF-TOKEN') };
+    const xsrfToken = getCookieByName('XSRF-TOKEN');
+    return { 'X-XSRF-TOKEN': xsrfToken };
 }
 
 function logout() {
     const x = getCookieByName('XSRF-TOKEN');
     console.log('XSRF-TOKEN cookie:', x);
 
+    const token = getTokenHeaderParam();
     fetch('/logout', {
         method: 'POST',
-        headers: getTokenHeaderParam()
+        headers: token,
     }).then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
