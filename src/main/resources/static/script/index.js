@@ -22,6 +22,7 @@ function unauthenticated() {
     });
 }
 
+/*
 async function getUserData() {
     try {
         const response = await fetch('/api/user');
@@ -37,6 +38,23 @@ async function getUserData() {
         unauthenticated();
         console.error('There has been a problem with your fetch operation:', error);
     }
+}
+*/
+
+function getUserData() {
+    return fetch('/api/user', { method: 'GET', headers: getTokenHeaderParam() }).then(response => {
+        console.log('/api/user - Response:', response);
+        if (response.status === 401) {
+            return Promise.reject('Unauthorized');
+        }
+        response.json().then((data) => {
+            user.textContent = JSON.stringify(data);
+            console.log('Fetched user data:', data);
+            return data;
+        });
+    }).catch(error => {
+        Promise.reject(error);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
@@ -63,15 +81,17 @@ function getCookieByName(name) {
     return null;
 }
 
+function getTokenHeaderParam() {
+    return { 'X-XSRF-TOKEN': getCookieByName('XSRF-TOKEN') };
+}
+
 function logout() {
     const x = getCookieByName('XSRF-TOKEN');
     console.log('XSRF-TOKEN cookie:', x);
 
     fetch('/logout', {
         method: 'POST',
-        headers: {
-            'X-XSRF-TOKEN': x
-        }
+        headers: getTokenHeaderParam()
     }).then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');

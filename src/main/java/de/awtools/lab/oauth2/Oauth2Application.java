@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ComponentScan("de.awtools.lab.oauth2")
 public class Oauth2Application {
 
-    @CrossOrigin
+    // @CrossOrigin
     @GetMapping("/api/user")
     public ResponseEntity<Map<String, Object>> user(@AuthenticationPrincipal OAuth2User principal) {
         if (principal == null) { // This should NEVER happen as the endpoint is protected.
