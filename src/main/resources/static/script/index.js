@@ -42,7 +42,7 @@ async function getUserData() {
 */
 
 function getUserData() {
-    const token = getTokenHeaderParam()
+    const token = getTokenHeaderParam();
     return fetch('/api/user', { method: 'GET', headers: token }).then(response => {
         console.log('/api/user - Response:', response);
         if (response.status === 401) {
