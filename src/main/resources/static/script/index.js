@@ -53,7 +53,7 @@ function getUserData() {
             return data;
         });
     }).catch(error => {
-        Promise.reject(error);
+        return Promise.reject(error);
     });
 }
 
