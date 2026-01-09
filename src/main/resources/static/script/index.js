@@ -37,6 +37,7 @@ async function getUserData() {
     } catch (error) {
         unauthenticated();
         console.error('There has been a problem with your fetch operation:', error);
+        return error;
     }
 }
 */
