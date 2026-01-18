@@ -22,7 +22,7 @@ public class Oauth2Application {
         if (principal == null) { // This should NEVER happen as the endpoint is protected.
             return ResponseEntity.status(500).body(Map.of("error", "The principal is null. User not authenticated."));
         }
-        return ResponseEntity.ok(Collections.singletonMap("name", principal.getAttribute("name")));
+         return ResponseEntity.ok(Map.of("name", principal.getAttribute("name"), "email", principal.getAttribute("email")));
     }
 
 	public static void main(String[] args) {
