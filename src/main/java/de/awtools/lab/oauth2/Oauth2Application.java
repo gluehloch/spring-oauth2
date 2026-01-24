@@ -19,7 +19,7 @@ public class Oauth2Application {
 
     @GetMapping("/api/user")
     public ResponseEntity<Map<String, Object>> user(@AuthenticationPrincipal OAuth2User principal) {
-        if (principal == null) { // This should NEVER happen as the endpoint is protected.
+        if (principal == null) { // This should NEVER happen because the endpoint is protected.
             return ResponseEntity.status(500).body(Map.of("error", "The principal is null. User not authenticated."));
         }
         return ResponseEntity.ok(Collections.singletonMap("name", principal.getAttribute("name")));

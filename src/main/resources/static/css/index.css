@@ -1,0 +1,7 @@
+.unauthenticated {
+    visibility: visible;
+}
+
+.authenticated {
+    visibility: hidden;
+}
