@@ -22,26 +22,6 @@ function unauthenticated() {
     });
 }
 
-/*
-async function getUserData() {
-    try {
-        const response = await fetch('/api/user');
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const result =  await response.json();
-        user.textContent = JSON.stringify(result);
-        authenticated();
-        console.log('Fetched user data:', result);
-        return result;
-    } catch (error) {
-        unauthenticated();
-        console.error('There has been a problem with your fetch operation:', error);
-        return error;
-    }
-}
-*/
-
 function getUserData() {
     const token = getTokenHeaderParam();
     return fetch('/api/user', { method: 'GET', headers: token }).then(response => {
@@ -49,6 +29,9 @@ function getUserData() {
         if (response.status === 401) {
             return Promise.reject('Unauthorized');
         }
+
+        
+
         response.json().then((data) => {
             user.textContent = JSON.stringify(data);
             console.log('Fetched user data:', data);
@@ -104,27 +87,3 @@ function logout() {
         console.error('There has been a problem with your fetch operation:', error);
     });
 }
-
-//$.ajaxSetup({
-//  beforeSend : function(xhr, settings) {
-//    if (settings.type == 'POST' || settings.type == 'PUT'
-//        || settings.type == 'DELETE') {
-//      if (!(/^http:.*/.test(settings.url) || /^https:.*/
-//        .test(settings.url))) {
-//        xhr.setRequestHeader("X-XSRF-TOKEN",
-//          Cookies.get('XSRF-TOKEN'));
-//      }
-//    }
-//  }
-//});
-
-/*    
-var logout = function() {
-    $.post("/logout", function() {
-        $("#user").html('');
-        $(".unauthenticated").show();
-        $(".authenticated").hide();
-    });
-    return true;
-}
-*/
