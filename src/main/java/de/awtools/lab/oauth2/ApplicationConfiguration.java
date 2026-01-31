@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 @EnableWebSecurity
@@ -29,6 +30,7 @@ public class ApplicationConfiguration {
             .oauth2Client(Customizer.withDefaults())
             .oauth2Login(login -> login.defaultSuccessUrl("/", true))
             .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
+        http.addFilterAfter(new CsrfCookieFilter(), CsrfFilter.class);
         return http.build();
     }
 
