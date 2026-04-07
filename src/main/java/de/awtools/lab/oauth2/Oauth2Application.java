@@ -23,7 +23,7 @@ public class Oauth2Application {
         if (principal == null) { // This should NEVER happen because the endpoint is protected.
             return ResponseEntity.status(500).body(Map.of("error", "The principal is null. User not authenticated."));
         }
-         return ResponseEntity.ok(Map.of("name", principal.getAttribute("name"), "email", principal.getAttribute("email")));
+        return ResponseEntity.ok(Map.of("name", principal.getAttribute("name"), "email", principal.getAttribute("email")));
     }
 
     @GetMapping("/csrf")
