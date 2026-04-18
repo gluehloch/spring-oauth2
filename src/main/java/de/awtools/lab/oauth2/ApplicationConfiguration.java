@@ -26,7 +26,11 @@ public class ApplicationConfiguration {
             .authorizeHttpRequests((authz) -> authz
                 .requestMatchers( "/error", "/favicon.ico", "/css/**", "/script/**", "/index.html").permitAll()
                 .anyRequest().authenticated())
-            .logout(l -> l .logoutSuccessUrl("/").permitAll())
+            .logout(l -> l
+                .logoutSuccessUrl("/")
+                .deleteCookies("X-XSRF-TOKEN")
+                .invalidateHttpSession(false)
+                .permitAll())
             .oauth2Client(Customizer.withDefaults())
             .oauth2Login(login -> login.defaultSuccessUrl("/", true))
             .exceptionHandling(e -> e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
