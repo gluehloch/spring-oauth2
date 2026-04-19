@@ -1,6 +1,5 @@
 package de.awtools.lab.oauth2;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
@@ -31,8 +30,8 @@ public class Oauth2Application {
         return token;
     }
 
-	public static void main(String[] args) {
-		SpringApplication.run(Oauth2Application.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Oauth2Application.class, args);
+    }
 
 }

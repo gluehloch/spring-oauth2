@@ -28,9 +28,7 @@ function getUserData() {
         console.log('/api/user - Response:', response);
         if (response.status === 401) {
             return Promise.reject('Unauthorized');
-        }
-
-        
+        }     
 
         response.json().then((data) => {
             user.textContent = JSON.stringify(data);
@@ -72,13 +70,19 @@ function getTokenHeaderParam() {
 }
 
 function logout() {
-    const x = getCookieByName('XSRF-TOKEN');
-    console.log('XSRF-TOKEN cookie:', x);
+    const xsrf = getCookieByName('XSRF-TOKEN');
+    console.log('XSRF-TOKEN cookie:', xsrf);
+	
+	const headers = new Headers();
+	headers.append('X-XSRF-TOKEN', xsrf);
+	headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
     const token = getTokenHeaderParam();
     fetch('/logout', {
         method: 'POST',
-        headers: token,
+		credentials: 'same-origin',
+        headers: headers,
+		body: new URLSearchParams({"_csrf": xsrf})
     }).then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
