@@ -39,7 +39,7 @@ public class ApplicationConfiguration {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/error", "/favicon.ico", "/css/**", "/script/**", "/index.html").permitAll()
                         .anyRequest().authenticated())
-                .logout(l -> l.logoutSuccessUrl("/").permitAll())
+                .logout(l -> l.logoutSuccessUrl("/").permitAll().addLogoutHandler(clearSiteData))
                 .oauth2Client(Customizer.withDefaults())
                 .oauth2Login(login -> login.defaultSuccessUrl("/", true))
                 .exceptionHandling(e -> e
