@@ -35,11 +35,11 @@ public class ApplicationConfiguration {
         HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter(Directive.ALL));
 
         http.requestCache(cache -> cache.requestCache(requestCache))
-                .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).spa())
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/error", "/favicon.ico", "/css/**", "/script/**", "/index.html").permitAll()
                         .anyRequest().authenticated())
-                .logout(l -> l.logoutSuccessUrl("/").permitAll().addLogoutHandler(clearSiteData))
+                .logout(l -> l.logoutUrl("/logout").logoutSuccessUrl("/").permitAll().addLogoutHandler(clearSiteData))
                 .oauth2Client(Customizer.withDefaults())
                 .oauth2Login(login -> login.defaultSuccessUrl("/", true))
                 .exceptionHandling(e -> e
