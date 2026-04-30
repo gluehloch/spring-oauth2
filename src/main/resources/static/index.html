@@ -14,8 +14,19 @@
 <body>
 	<h1>Demo</h1>
     <div class="container unauthenticated">
-        <a href="/oauth2/authorization/github">With GitHub click here</a>
-        <button onClick="getUserData()" class="btn btn-primary">User Data</button>
+        <div>
+            <a href="/oauth2/authorization/github">With GitHub click here</a>
+            <button onClick="getUserData()" class="btn btn-primary">User Data</button>
+        </div>
+        <div>
+            <a href="/oauth2/authorization/google">With Google click here</a>
+            <button onClick="getUserData()" class="btn btn-primary">User Data</button>
+        </div>        
+        <!--
+        <div>
+            <a href="/login">Spring Default Login page with provider selector.</a>
+        </div>
+        -->
     </div>
     <div class="container authenticated">
         Logged in as: <span id="user"></span>

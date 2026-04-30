@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.logout.HeaderWriterLogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
@@ -37,13 +38,15 @@ public class ApplicationConfiguration {
         http.requestCache(cache -> cache.requestCache(requestCache))
                 .csrf(c -> c.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).spa())
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/error", "/favicon.ico", "/css/**", "/script/**", "/index.html").permitAll()
+                        .requestMatchers("/login", "/error", "/favicon.ico", "/css/**", "/script/**", "/index.html").permitAll()
                         .anyRequest().authenticated())
                 .logout(l -> l.logoutUrl("/logout").logoutSuccessUrl("/").permitAll().addLogoutHandler(clearSiteData))
                 .oauth2Client(Customizer.withDefaults())
                 .oauth2Login(login -> login.defaultSuccessUrl("/", true))
                 .exceptionHandling(e -> e
-                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                        // .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                        // Redirect unauthenticated requests to the default provider-selection login page at /login
+                        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
                         .accessDeniedHandler(new CustomAccessDeniedHandler()));
         http.addFilterAfter(new CsrfCookieFilter(), CsrfFilter.class);
         return http.build();
