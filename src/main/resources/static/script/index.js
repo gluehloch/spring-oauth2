@@ -87,6 +87,7 @@ function logout() {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+        unauthenticated();
     }).catch((error) =>{
         console.error('There has been a problem with your fetch operation:', error);
     });
